@@ -18,9 +18,9 @@
 
 ## 4. Commit inicial
 
-- [ ] 4.1 `git branch -M main`
-- [ ] 4.2 `git add -A` e conferir `git status` / `git diff --cached --stat`: sem `dist/`, `node_modules/`, `.env*`
-- [ ] 4.3 Commit inicial com a mensagem e a atribuição definidas para commits desta sessão
+- [x] 4.1 `git branch -M main`
+- [x] 4.2 `git add -A` e conferir `git status` / `git diff --cached --stat`: sem `dist/`, `node_modules/`, `.env*`
+- [x] 4.3 Commit inicial com a mensagem e a atribuição definidas para commits desta sessão
 
 ## 5. Push para o GitHub (exige confirmação)
 

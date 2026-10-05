@@ -24,6 +24,6 @@
 
 ## 5. Push para o GitHub (exige confirmação)
 
-- [ ] 5.1 Pedir ao usuário a URL do repositório e confirmar a visibilidade (privado recomendado)
-- [ ] 5.2 Após confirmação explícita: `git remote add origin <url>` e `git push -u origin main`
-- [ ] 5.3 Conferir no GitHub que o conteúdo subiu e que não há arquivos indevidos
+- [x] 5.1 Pedir ao usuário a URL do repositório e confirmar a visibilidade (privado recomendado)
+- [x] 5.2 Após confirmação explícita: `git remote add origin <url>` e `git push -u origin main`
+- [x] 5.3 Conferir no GitHub que o conteúdo subiu e que não há arquivos indevidos

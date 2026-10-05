@@ -1,0 +1,34 @@
+#!/bin/sh
+# Configuração de runtime do SPA, gerada antes de o nginx subir.
+#
+# A extensão `.envsh` é intencional: o entrypoint da imagem oficial faz *source* destes arquivos, e
+# não apenas os executa, então as variáveis exportadas aqui chegam ao passo de envsubst que processa
+# /etc/nginx/templates/*.template.
+#
+# API_BASE_URL   origem da sage-kahoot-api (vazio = mesma origem do frontend)
+# JOIN_URL_BASE  endereço exibido no telão para o participante entrar (vazio = origem do frontend)
+set -eu
+
+API_BASE_URL="${API_BASE_URL:-}"
+JOIN_URL_BASE="${JOIN_URL_BASE:-}"
+
+# Fora da árvore estática: o pod roda com sistema de arquivos raiz somente leitura e apenas os
+# volumes temporários são graváveis.
+mkdir -p /tmp/runtime
+
+cat > /tmp/runtime/config.js <<EOF
+window.__SAGE_KAHOOT_CONFIG__ = {
+  apiBaseUrl: '${API_BASE_URL}',
+  joinUrlBase: '${JOIN_URL_BASE}',
+}
+EOF
+
+# O CSP precisa liberar a origem da API em http(s) e em ws(s) — o SignalR sobe para WebSocket.
+if [ -n "${API_BASE_URL}" ]; then
+  WS_ORIGIN=$(printf '%s' "${API_BASE_URL}" | sed -e 's|^http://|ws://|' -e 's|^https://|wss://|')
+  CSP_CONNECT_SRC="${API_BASE_URL} ${WS_ORIGIN}"
+else
+  CSP_CONNECT_SRC=""
+fi
+
+export CSP_CONNECT_SRC

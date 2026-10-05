@@ -1,0 +1,50 @@
+schema: spec-driven
+
+context: |
+  sage-kahoot-web — frontend do quiz gamificado interno de uma empresa (uso interno, sem exposição pública).
+
+  Stack: React 19 + Vite + TypeScript, TanStack Query, React Router, @microsoft/signalr.
+  Client REST tipado gerado do contrato da API (openapi-typescript + openapi-fetch) — o arquivo
+  src/api/generated/schema.ts é gerado por `npm run api:types` e não é editado à mão.
+
+  Backend: sage-kahoot-api (.NET 10 + FastEndpoints + MongoDB), repositório separado, com seu próprio
+  openspec. O contrato REST é o openapi.json na raiz deste projeto; o contrato do hub SignalR não
+  aparece no OpenAPI e está descrito na capability realtime-client.
+
+  Superfícies: participante (rota raiz, anônimo por PIN + apelido, mobile-first), apresentador
+  (/admin, login com credencial única) e telão (/admin/sessions/:id, projetor).
+
+  Convenções: camadas componente -> hook -> endpoint -> client tipado; nenhum fetch em componente;
+  acesso ao hub só pela camada de tempo real; textos e specs em português do Brasil; sem dados
+  pessoais reais em exemplos (apelidos sintéticos); sem credencial no frontend.
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+# Add your tech stack, conventions, style guides, domain knowledge, etc.
+# Example:
+#   context: |
+#     Tech stack: TypeScript, React, Node.js
+#     We use conventional commits
+#     Domain: e-commerce platform
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing

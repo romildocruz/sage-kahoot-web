@@ -1,0 +1,2240 @@
+{
+  "x-generator": "NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "sage-kahoot-api",
+    "description": "API interna da plataforma de quiz gamificado de uma empresa. Rotas administrativas exigem token de admin; entrada por PIN e envio de resposta são do participante.",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000"
+    }
+  ],
+  "paths": {
+    "/api/v1/sessions/{sessionId}/answers": {
+      "post": {
+        "tags": [
+          "Sessions"
+        ],
+        "summary": "Registra a resposta do participante à pergunta aberta.",
+        "description": "Confirma o recebimento sem revelar acerto: o resultado só é divulgado no fechamento da pergunta.",
+        "operationId": "SageKahootApiFeaturesSessionsSubmitAnswerSubmitAnswerEndpoint",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            }
+          }
+        ],
+        "requestBody": {
+          "x-name": "SubmitAnswerRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SageKahootApiFeaturesSessionsSubmitAnswerSubmitAnswerRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SageKahootApplicationSessionsAnswerAcceptedResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FastEndpointsProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/sessions/{sessionId}/start": {
+      "post": {
+        "tags": [
+          "Sessions"
+        ],
+        "summary": "Inicia a sessão e abre a primeira pergunta.",
+        "operationId": "SageKahootApiFeaturesSessionsStartSessionStartSessionEndpoint",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SageKahootApplicationSessionsSessionDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/sessions": {
+      "post": {
+        "tags": [
+          "Sessions"
+        ],
+        "summary": "Abre uma sessão a partir de um quiz e devolve o PIN. A sessão congela uma cópia do quiz neste instante.",
+        "operationId": "SageKahootApiFeaturesSessionsOpenSessionOpenSessionEndpoint",
+        "requestBody": {
+          "x-name": "OpenSessionRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SageKahootApiFeaturesSessionsOpenSessionOpenSessionRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SageKahootApplicationSessionsSessionDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/sessions/join": {
+      "post": {
+        "tags": [
+          "Sessions"
+        ],
+        "summary": "Entrada anônima do participante por PIN e apelido.",
+        "description": "Sem login. Devolve um token de participante vinculado à sessão, usado para responder e conectar ao hub. Limitado por IP para conter varredura de PINs.",
+        "operationId": "SageKahootApiFeaturesSessionsJoinSessionJoinSessionEndpoint",
+        "requestBody": {
+          "x-name": "JoinSessionRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SageKahootApiFeaturesSessionsJoinSessionJoinSessionRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SageKahootApplicationSessionsJoinSessionResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sessions/{sessionId}/state": {
+      "get": {
+        "tags": [
+          "Sessions"
+        ],
+        "summary": "Estado corrente da sessão, com o tempo restante calculado pelo servidor.",
+        "operationId": "SageKahootApiFeaturesSessionsGetStateGetSessionStateEndpoint",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SageKahootApplicationAbstractionsSessionStatePayload"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": [
+              "admin",
+              "participant"
+            ]
+          },
+          {
+            "Bearer": [
+              "admin",
+              "participant"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/sessions/{sessionId}/ranking": {
+      "get": {
+        "tags": [
+          "Sessions"
+        ],
+        "summary": "Ranking corrente da sessão, marcado como final quando a sessão já encerrou.",
+        "operationId": "SageKahootApiFeaturesSessionsGetRankingGetRankingEndpoint",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SageKahootApplicationAbstractionsRankingPayload"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": [
+              "admin",
+              "participant"
+            ]
+          },
+          {
+            "Bearer": [
+              "admin",
+              "participant"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/sessions/{sessionId}/end": {
+      "post": {
+        "tags": [
+          "Sessions"
+        ],
+        "summary": "Encerra a sessão manualmente e consolida o ranking final.",
+        "operationId": "SageKahootApiFeaturesSessionsEndSessionEndSessionEndpoint",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SageKahootApplicationSessionsSessionDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/sessions/{sessionId}/advance": {
+      "post": {
+        "tags": [
+          "Sessions"
+        ],
+        "summary": "Fecha a pergunta atual, revela a resposta e abre a próxima. Na última, encerra a sessão.",
+        "operationId": "SageKahootApiFeaturesSessionsAdvanceQuestionAdvanceQuestionEndpoint",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SageKahootApplicationSessionsSessionDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/reports/sessions": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Lista sessões anteriores, da mais recente para a mais antiga, com filtro por período e status.",
+        "operationId": "SageKahootApiFeaturesReportsListSessionsListSessionsEndpoint",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1,
+              "nullable": false
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20,
+              "nullable": false
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/SageKahootDomainSessionsSessionStatus"
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SageKahootApplicationAbstractionsPagedResultOfSessionListItem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/reports/sessions/{sessionId}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Relatório da sessão: ranking com pódio e estatísticas por pergunta.",
+        "description": "Tudo recalculado a partir das respostas persistidas. Sessão ainda em andamento devolve ranking parcial, marcado como não final.",
+        "operationId": "SageKahootApiFeaturesReportsGetSessionReportGetSessionReportEndpoint",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SageKahootApplicationReportingSessionReport"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/reports/sessions/{sessionId}/export": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Exporta o relatório da sessão em CSV ou JSON (?format=csv|json).",
+        "operationId": "SageKahootApiFeaturesReportsExportSessionReportExportSessionReportEndpoint",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "csv",
+              "nullable": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/quizzes/{quizId}": {
+      "put": {
+        "tags": [
+          "Quizzes"
+        ],
+        "summary": "Altera um quiz. Recusado com 409 se houver sessão ativa vinculada.",
+        "operationId": "SageKahootApiFeaturesQuizzesUpdateQuizUpdateQuizEndpoint",
+        "parameters": [
+          {
+            "name": "quizId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            }
+          }
+        ],
+        "requestBody": {
+          "x-name": "UpdateQuizRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SageKahootApiFeaturesQuizzesUpdateQuizRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SageKahootApplicationQuizzesQuizDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Quizzes"
+        ],
+        "summary": "Consulta um quiz com todas as perguntas e opções, incluindo a marcação da correta.",
+        "operationId": "SageKahootApiFeaturesQuizzesGetQuizGetQuizEndpoint",
+        "parameters": [
+          {
+            "name": "quizId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SageKahootApplicationQuizzesQuizDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Quizzes"
+        ],
+        "summary": "Exclui um quiz. Relatórios de sessões encerradas continuam consultáveis, pois cada sessão guarda seu próprio snapshot.",
+        "operationId": "SageKahootApiFeaturesQuizzesDeleteQuizDeleteQuizEndpoint",
+        "parameters": [
+          {
+            "name": "quizId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/quizzes": {
+      "get": {
+        "tags": [
+          "Quizzes"
+        ],
+        "summary": "Lista quizzes ordenados por atualização decrescente. Tamanho de página máximo: 100.",
+        "operationId": "SageKahootApiFeaturesQuizzesListQuizzesListQuizzesEndpoint",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1,
+              "nullable": false
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20,
+              "nullable": false
+            }
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SageKahootApplicationAbstractionsPagedResultOfQuizListItem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Quizzes"
+        ],
+        "summary": "Cria um quiz. Pode ser criado sem perguntas e recebê-las depois.",
+        "operationId": "SageKahootApiFeaturesQuizzesCreateQuizCreateQuizEndpoint",
+        "requestBody": {
+          "x-name": "CreateQuizRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SageKahootApiFeaturesQuizzesCreateQuizRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SageKahootApplicationQuizzesQuizDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/quizzes/{quizId}/duplicate": {
+      "post": {
+        "tags": [
+          "Quizzes"
+        ],
+        "summary": "Duplica um quiz. A cópia é independente: editar uma não afeta a outra.",
+        "operationId": "SageKahootApiFeaturesQuizzesDuplicateQuizDuplicateQuizEndpoint",
+        "parameters": [
+          {
+            "name": "quizId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SageKahootApplicationQuizzesQuizDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Autentica o apresentador e emite o token de admin.",
+        "description": "Credencial única configurada via Secret. Limitado por IP para conter força bruta.",
+        "operationId": "SageKahootApiFeaturesAuthLoginLoginEndpoint",
+        "requestBody": {
+          "x-name": "LoginRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SageKahootApiFeaturesAuthLoginLoginRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SageKahootApplicationAuthAdminLoginAdminLoginResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FastEndpointsProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicrosoftAspNetCoreMvcProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SageKahootApplicationSessionsAnswerAcceptedResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sessionId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "questionId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "responseTimeMs": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "MicrosoftAspNetCoreMvcProblemDetails": {
+        "type": "object",
+        "additionalProperties": {
+          "nullable": true
+        },
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SageKahootApiFeaturesSessionsSubmitAnswerSubmitAnswerRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "questionId",
+          "optionId"
+        ],
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "format": "guid",
+            "minLength": 1,
+            "nullable": false
+          },
+          "optionId": {
+            "type": "string",
+            "format": "guid",
+            "minLength": 1,
+            "nullable": false
+          }
+        }
+      },
+      "FastEndpointsProblemDetails": {
+        "type": "object",
+        "description": "RFC9457 compatible problem details/ error response class. this can be used by configuring startup like so:\napp.UseFastEndpoints(c => c.Errors.UseProblemDetails())",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "default": "https://www.rfc-editor.org/rfc/rfc7231#section-6.5.1"
+          },
+          "title": {
+            "type": "string",
+            "default": "One or more validation errors occurred."
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "default": 400
+          },
+          "instance": {
+            "type": "string",
+            "default": "/api/route"
+          },
+          "traceId": {
+            "type": "string",
+            "default": "0HMPNHL0JHL76:00000001"
+          },
+          "detail": {
+            "type": "string",
+            "description": "the details of the error",
+            "nullable": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FastEndpointsProblemDetails_Error"
+            }
+          }
+        }
+      },
+      "FastEndpointsProblemDetails_Error": {
+        "type": "object",
+        "description": "the error details object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "the name of the error or property of the dto that caused the error",
+            "default": "Error or field name"
+          },
+          "reason": {
+            "type": "string",
+            "description": "the reason for the error",
+            "default": "Error reason"
+          },
+          "code": {
+            "type": "string",
+            "description": "the code of the error",
+            "nullable": true
+          },
+          "severity": {
+            "type": "string",
+            "description": "the severity of the error",
+            "nullable": true
+          }
+        }
+      },
+      "SageKahootApplicationSessionsSessionDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "pin": {
+            "type": "string"
+          },
+          "quizId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "quizTitle": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SageKahootDomainSessionsSessionStatus"
+          },
+          "totalQuestions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "participantCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SageKahootDomainSessionsSessionStatus": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Aguardando",
+          "EmAndamento",
+          "Encerrada",
+          "Cancelada"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "SageKahootApiFeaturesSessionsStartSessionSessionControlRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SageKahootApiFeaturesSessionsOpenSessionOpenSessionRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "quizId"
+        ],
+        "properties": {
+          "quizId": {
+            "type": "string",
+            "format": "guid",
+            "minLength": 1,
+            "nullable": false
+          }
+        }
+      },
+      "SageKahootApplicationSessionsJoinSessionResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sessionId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "participantId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "accessToken": {
+            "type": "string"
+          },
+          "expiresAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "quizTitle": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SageKahootDomainSessionsSessionStatus"
+          },
+          "totalQuestions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "participantCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SageKahootApiFeaturesSessionsJoinSessionJoinSessionRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "pin",
+          "nickname"
+        ],
+        "properties": {
+          "pin": {
+            "type": "string",
+            "maxLength": 6,
+            "minLength": 6,
+            "pattern": "^[0-9]+$",
+            "nullable": false
+          },
+          "nickname": {
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 0,
+            "nullable": false
+          }
+        }
+      },
+      "SageKahootApplicationAbstractionsSessionStatePayload": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sessionId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "status": {
+            "type": "string"
+          },
+          "currentQuestionIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalQuestions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currentQuestion": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SageKahootApplicationAbstractionsQuestionOpenedPayload"
+              }
+            ]
+          },
+          "participantCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "myTotalScore": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "myAnswerRegistered": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SageKahootApplicationAbstractionsQuestionOpenedPayload": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sessionId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "questionId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "questionIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalQuestions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SageKahootApplicationAbstractionsPublicOption"
+            }
+          },
+          "timeLimitSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "openedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "closesAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "remainingSeconds": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "SageKahootApplicationAbstractionsPublicOption": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      },
+      "SageKahootApiFeaturesSessionsGetStateGetSessionStateRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SageKahootApplicationAbstractionsRankingPayload": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sessionId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SageKahootApplicationAbstractionsRankingEntry"
+            }
+          },
+          "isFinal": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SageKahootApplicationAbstractionsRankingEntry": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "position": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "participantId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "totalScore": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SageKahootApiFeaturesSessionsGetRankingGetRankingRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SageKahootApplicationAbstractionsPagedResultOfSessionListItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SageKahootApplicationAbstractionsSessionListItem"
+            }
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SageKahootApplicationAbstractionsSessionListItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "pin": {
+            "type": "string"
+          },
+          "quizId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "quizTitle": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SageKahootDomainSessionsSessionStatus"
+          },
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startedAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endedAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "participantCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "topScore": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SageKahootApiFeaturesReportsListSessionsListSessionsRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SageKahootApplicationReportingSessionReport": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sessionId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "pin": {
+            "type": "string"
+          },
+          "quizId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "quizTitle": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SageKahootDomainSessionsSessionStatus"
+          },
+          "isFinal": {
+            "type": "boolean"
+          },
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startedAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endedAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "participantCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ranking": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SageKahootApplicationReportingParticipantReport"
+            }
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SageKahootApplicationReportingQuestionReport"
+            }
+          }
+        }
+      },
+      "SageKahootApplicationReportingParticipantReport": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "position": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "participantId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "totalScore": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "correctCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "wrongCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unansweredCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "averageResponseTimeMs": {
+            "type": "number",
+            "format": "double"
+          },
+          "isPodium": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SageKahootApplicationReportingQuestionReport": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string"
+          },
+          "correctOptionId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SageKahootApplicationReportingQuestionOptionReport"
+            }
+          },
+          "answerCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unansweredCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "correctRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "averageResponseTimeMs": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "SageKahootApplicationReportingQuestionOptionReport": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "optionId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "text": {
+            "type": "string"
+          },
+          "isCorrect": {
+            "type": "boolean"
+          },
+          "answerCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SageKahootApiFeaturesReportsGetSessionReportGetSessionReportRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SageKahootApiFeaturesReportsExportSessionReportExportSessionReportRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SageKahootApplicationQuizzesQuizDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SageKahootApplicationQuizzesQuestionDto"
+            }
+          },
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SageKahootApplicationQuizzesQuestionDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string"
+          },
+          "timeLimitSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "basePoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SageKahootApplicationQuizzesOptionDto"
+            }
+          }
+        }
+      },
+      "SageKahootApplicationQuizzesOptionDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "text": {
+            "type": "string"
+          },
+          "isCorrect": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SageKahootApiFeaturesQuizzesUpdateQuizRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "title"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 0,
+            "nullable": false
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 0,
+            "nullable": true
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SageKahootApiFeaturesQuizzesQuestionRequest"
+            }
+          }
+        }
+      },
+      "SageKahootApiFeaturesQuizzesQuestionRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "text",
+          "options"
+        ],
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 300,
+            "minLength": 0,
+            "nullable": false
+          },
+          "timeLimitSeconds": {
+            "type": "integer",
+            "format": "int32",
+            "maximum": 120.0,
+            "minimum": 5.0
+          },
+          "basePoints": {
+            "type": "integer",
+            "format": "int32",
+            "maximum": 2000.0,
+            "minimum": 100.0
+          },
+          "options": {
+            "type": "array",
+            "nullable": false,
+            "items": {
+              "$ref": "#/components/schemas/SageKahootApiFeaturesQuizzesOptionRequest"
+            }
+          }
+        }
+      },
+      "SageKahootApiFeaturesQuizzesOptionRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "text"
+        ],
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 0,
+            "nullable": false
+          },
+          "isCorrect": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SageKahootApplicationAbstractionsPagedResultOfQuizListItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SageKahootApplicationAbstractionsQuizListItem"
+            }
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SageKahootApplicationAbstractionsQuizListItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "questionCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SageKahootApiFeaturesQuizzesListQuizzesListQuizzesRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SageKahootApiFeaturesQuizzesGetQuizGetQuizRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SageKahootApiFeaturesQuizzesDuplicateQuizDuplicateQuizRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SageKahootApiFeaturesQuizzesDeleteQuizDeleteQuizRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SageKahootApiFeaturesQuizzesCreateQuizRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "title"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 0,
+            "nullable": false
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 0,
+            "nullable": true
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SageKahootApiFeaturesQuizzesQuestionRequest"
+            }
+          }
+        }
+      },
+      "SageKahootApplicationAuthAdminLoginAdminLoginResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "expiresAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "SageKahootApiFeaturesAuthLoginLoginRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "username",
+          "password"
+        ],
+        "properties": {
+          "username": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 0,
+            "nullable": false
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 0,
+            "nullable": false
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "JWTBearerAuth": {
+        "type": "http",
+        "description": "Enter a JWT token to authorize the requests...",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      },
+      "Bearer": {
+        "type": "http",
+        "description": "Informe o token obtido em POST /api/v1/auth/login.",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+server {
+    listen 8080;
+    server_name _;
+    root /usr/share/nginx/html;
+
+    # Cabeçalhos de defesa. Reincluídos em cada location que declara add_header próprio — ver o
+    # comentário em security-headers.inc.template. `connect-src` recebe a origem da API, preenchida
+    # no start do container por 05-runtime-config.envsh.
+    include /etc/nginx/conf.d/security-headers.inc;
+
+    gzip on;
+    gzip_types text/css application/javascript application/json image/svg+xml;
+    gzip_min_length 1024;
+
+    # Nome com hash: pode ficar em cache indefinidamente.
+    location /assets/ {
+        include /etc/nginx/conf.d/security-headers.inc;
+        expires 1y;
+        add_header Cache-Control "public, immutable" always;
+    }
+
+    # Gerado no start do container, fora da árvore estática (raiz somente leitura).
+    location = /config.js {
+        include /etc/nginx/conf.d/security-headers.inc;
+        alias /tmp/runtime/config.js;
+        default_type application/javascript;
+        add_header Cache-Control "no-store" always;
+    }
+
+    # index.html define a versão em uso: nunca pode ficar em cache.
+    location = /index.html {
+        include /etc/nginx/conf.d/security-headers.inc;
+        add_header Cache-Control "no-store" always;
+    }
+
+    location = /healthz {
+        access_log off;
+        return 200 "ok\n";
+    }
+
+    # SPA: rota desconhecida devolve o index e o roteamento acontece no cliente.
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}

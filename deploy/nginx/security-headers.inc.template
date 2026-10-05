@@ -1,0 +1,13 @@
+# Cabeçalhos de defesa, em arquivo à parte de propósito.
+#
+# `add_header` no nginx não é cumulativo: um bloco que declara qualquer add_header próprio descarta
+# todos os herdados do nível acima. Como as três locations de cache declaram Cache-Control, os
+# cabeçalhos de segurança precisam ser reincluídos em cada uma — senão somem justamente do documento
+# principal, que é onde mais importam.
+#
+# Extensão .inc (e não .conf) para não ser incluído automaticamente por /etc/nginx/nginx.conf:
+# o envsubst do entrypoint escreve o resultado em /etc/nginx/conf.d/security-headers.inc.
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-Frame-Options "DENY" always;
+add_header Referrer-Policy "same-origin" always;
+add_header Content-Security-Policy "default-src 'self'; connect-src 'self' ${CSP_CONNECT_SRC}; img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'self'" always;
